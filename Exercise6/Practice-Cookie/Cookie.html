@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Set and Get Cookies in JavaScript</title>
+</head>
+<body>
+    <script>
+    function setCookie(name, value) {
+        var cookie = name + "=" + encodeURIComponent(value);
+            document.cookie = cookie;
+    }    
+    function getCookie(name) {
+            var cookieArr = document.cookie.split(";");
+        
+            for(var i = 0; i < cookieArr.length; i++) {
+                var cookiePair = cookieArr[i].split("=");
+                if(name == cookiePair[0].trim()) {
+                    return decodeURIComponent(cookiePair[1]);
+                }
+            }
+            return null;
+        }
+        document.write(getCookie("fname"));
+        document.write(getCookie("lname"));
+        document.write(getCookie("class"));
+    function checkCookie() {
+        var firstName = getCookie("firstName");
+    
+        if(firstName != null) {
+            alert("Welcome again, " + firstName);
+        } else {
+            firstName = prompt("Please enter your first name:");
+            if(firstName != "" && firstName != null) {
+                setCookie("firstName", firstName);
+            }
+        }
+    }
+    window.onload = checkCookie;
+
+	// Uncomment the following line to delete this cookie
+	// setCookie("firstName", "", 0);
+    </script>
+    <p><strong>Note:</strong> Now if you press the "Show Output" button or refresh the page, you will see a greeting message, if you've entered your first name in the prompt dialog box. See the last line of the JavaScript code to know how to delete this <b>firstName</b> cookie.</p>
+</body>
+</html>

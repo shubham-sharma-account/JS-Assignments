@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoLocation</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <h2>Hello click the below button to view your location in map</h2>
+        <select id="loc">
+            <option value="">Select Location</option>
+            <option value="burj">Burj Khlifa, Dubai</option>
+            <option value="taj">Taj mahal, Agra</option>
+            <option value="eiffel">Eiffel Tower, Peris</option>
+            <option value="maimt">MAIMT College, Jagadhri</option>
+            <option value="debut">Debut Infotech, Chandigarh</option>
+        </select>
+    <button id="btn">Click</button>
+    <div id="map"></div>
+    <script src="js/script.js"></script>
+    <script defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDnGxfNjpZLjzp1uZEYs5KZAisy79hkgU&callback=initMap">
+    </script>
+</body>
+</html>

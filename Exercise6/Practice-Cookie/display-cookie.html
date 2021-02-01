@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="fname" name="fname">
+    <input type="text" id="lname" name="lname">
+    <input type="text" id="class" name="class">
+    <button onclick="set()">Click me</button>
+    <script>
+        function setCookie(name, value) {
+            var cookie = name + "=" + encodeURIComponent(value);
+                document.cookie = cookie;
+        }    
+        function getCookie(name) {
+            var cookieArr = document.cookie.split(";");
+        
+            for(var i = 0; i < cookieArr.length; i++) {
+                var cookiePair = cookieArr[i].split("=");
+                if(name == cookiePair[0].trim()) {
+                    return decodeURIComponent(cookiePair[1]);
+                }
+            }
+            return null;
+        }
+        function set()
+        {
+            val1=document.getElementById('fname').value;
+            setCookie("fname",val1);
+            val2=document.getElementById('lname').value;
+            setCookie("lname",val2);
+            val3=document.getElementById('class').value;
+            setCookie("class",val3);
+        }
+        </script>
+</body>
+</html>

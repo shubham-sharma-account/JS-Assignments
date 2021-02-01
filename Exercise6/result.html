@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./CSS/style.css">
+</head>
+<body>
+    <div class="submit">
+        <p style="font-size: 20px; background-color: rgb(233, 220, 220);">Submitted Information</p>
+        <p id="p0"></p>
+        <p id="p1"></p>
+        <p id="p2"></p>
+        <p id="p3"></p>
+        <p id="p4"></p>
+        <p id="p5"></p>
+        <p id="p6"></p>
+        <p id="p7"></p>
+    </div>
+    <script>
+        function getCookie(name) {
+            var cookieArr = document.cookie.split(";");
+        
+            for(var i = 0; i < cookieArr.length; i++) {
+                var cookiePair = cookieArr[i].split("=");
+                if(name == cookiePair[0].trim()) {
+                    return decodeURIComponent(cookiePair[1]);
+                }
+            }
+            return false;
+        }
+        var val_arr=["First name","Last name","Email","Phone no.","Address","Course","Subject","Date"];
+        for(var i=0;i<val_arr.length;i++)
+        {
+            document.getElementById('p'+i).innerHTML="<b>"+val_arr[i]+":</b> "+getCookie(val_arr[i]);
+        }
+        </script>
+</body>
+</html>

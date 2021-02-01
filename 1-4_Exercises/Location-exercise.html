@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoLocation</title>
+    <style>
+        #map{
+            height:630px;
+            width:50%;
+            border:5px solid black;
+            position: absolute;
+            top:15%;
+            left:25%;
+            display:none;
+        }
+        button{
+            padding:5px 30px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Hello click the below button to view your location in map</h2>
+    <button onclick="showMap()">Click</button>
+    <div id="map"></div>
+    <p id="error"></p>
+    <script>
+        error=document.getElementById('error');
+        getLocation();
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            }else {
+            error.innerHTML = "Geolocation is not supported by this browser.";
+        }
+        }
+
+        function showPosition(position) {
+        var x=[position.coords.latitude,position.coords.longitude];
+        initMap(x);
+        }
+        function initMap(x)
+        {
+            var options = {
+                center: { lat: x[0], lng: x[1] }, // 29.9510, 77.5396
+                zoom: 16
+            }
+            var map = new google.maps.Map(document.getElementById("map"),options);
+
+            var marker = new google.maps.Marker({
+                position:{lat: x[0], lng: x[1] },
+                map:map
+            });
+        }
+        function showMap(){
+            document.getElementById("map").style.display="block";
+        }
+    </script>
+    <script defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBDnGxfNjpZLjzp1uZEYs5KZAisy79hkgU&callback=initMap">
+    </script>
+</body>
+</html>

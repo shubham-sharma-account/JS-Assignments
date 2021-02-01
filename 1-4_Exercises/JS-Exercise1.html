@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Exercise1</title>
+    </head>
+    <body>
+        <h3 id="result"></h3>
+        <script>
+            var number1=parseInt(prompt("Please enter first number"));
+            var number2=parseInt(prompt("Please enter second number"));
+            var result=sum(number1,number2);
+            document.getElementById('result').innerHTML="First number is: "+number1+
+            "<br>Second number is: "+number2+"<br>Their sum is: "+result;
+            /**
+            * @description Sum of two numbers
+            * @param {integer} First number to be added
+            * @param {integer} Second number to be added
+            * @return {integer} Sum of two given numbers
+            */
+            function sum(n1,n2)
+            {
+                var sum=n1+n2;
+                return sum;
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do-Lists</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="text-light bg-dark p-3">
+        <h1>To do list</h1>
+    </header>
+    <form class="form-inline bg-secondary justify-content-center my-3 p-3" id="myform">
+        <!--add to do-->
+        <input class="form-control mr-sm-2" type="search" name="input" id="to-do-input" placeholder="Add into group" aria-label="Search">
+        <select class="form-control mx-3" id="select" name="select">
+            <option value=""></option>
+        </select>
+        <button class="btn bg-info text-light my-2 my-sm-0 px-3" type="button" id="addtodo-btn" onclick="addToDo()">Add into list</button>
+        <button class="btn bg-info text-light my-2 my-sm-0 px-3" type="button" id="edittodo-btn" onclick="savechanges()" style="display:none;">Save changes</button>
+
+    </form>
+    <div class="container-fluid bg-light" id="container">
+
+    </div>
+    <script>
+        /**
+ * @description Call when click on add todo button 
+*/
+function addToDo()
+        {
+            var value=document.getElementById('to-do-input').value;
+            if(value==""){
+                alert("Input feild is required!");
+                return false;
+            }else if (!(value.match(/^[a-zA-Z0-9 '@-_]*$/))){
+                alert("Only alphabets and numbers are allowed!");
+                return false;
+            }else if(value.length < 5 || value.length > 25){
+                alert("Length must to 5 to 25 character!");
+                return false;
+            }
+
+            var select = document.getElementById("select").value;
+            if(select){
+                var input = document.getElementById('to-do-input').value;
+                group_sel(select,input);                                       //if select box 
+            }else{
+                empty_sel();                                                   //if select box is empty
+            }
+        }
+
+        /**
+         * @description Call when select box has value
+         * @param {Character} selected group value
+         * @param {Character} todo value
+        */
+        function group_sel(select,input)
+        {
+            var target = document.getElementById(select+"_table");
+            var todo_table_tr = document.createElement("tr");
+            var todo_val = document.createElement("input");    //todo value
+            todo_val.value=input;
+
+            var edit_btn = document.createElement("button");  //Edit button
+            edit_btn.addEventListener('click', edit_todo);
+                var newText2 = document.createTextNode("Edit");
+                edit_btn.appendChild(newText2);
+
+                var delete_todo_btn = document.createElement("button");  //delete button
+                delete_todo_btn.addEventListener('click', delete_todo);
+                var newText3 = document.createTextNode("Delete");
+                delete_todo_btn.appendChild(newText3);
+
+                todo_table_tr.appendChild(todo_val);        //add todo
+                todo_table_tr.appendChild(edit_btn);       //add edit button
+                todo_table_tr.appendChild(delete_todo_btn);
+
+                target.appendChild(todo_table_tr);
+        }
+        
+        /* declaring valiables */
+        var grpName = "Group";
+        var i=1;
+        var select = document.getElementById("select");
+        /**
+         * @description Call when select box is empty
+        */
+        function empty_sel()
+        {
+            /* add group name into selectBox */
+            newOption = document.createElement("OPTION");
+            newOptionVal = document.createTextNode(grpName+i);
+
+            newOption.appendChild(newOptionVal);
+            select.insertBefore(newOption,select.lastChild);
+
+            /* add group on container */
+            var newElement1 = document.createElement("div");                 //create 
+            newElement1.id = "Group"+i;                                      // give id to div
+
+            var newElement2 = document.createElement("h3");
+            var newText = document.createTextNode(grpName+i);
+            newElement2.appendChild(newText);
+
+            var deleteGrp_btn = document.createElement("button");             //delete group button
+            var cut_icon = document.createTextNode("x");
+            deleteGrp_btn.classList.add('deleteGrp');
+            deleteGrp_btn.appendChild(cut_icon);
+            deleteGrp_btn.addEventListener('click', delete_Grp);
+            newElement2.insertAdjacentElement("beforeend",deleteGrp_btn);
+
+            var todo_table = document.createElement("table");
+            todo_table.id = "Group"+i+"_table";
+
+                var val = document.getElementById("to-do-input").value;
+                var todo_table_tr = document.createElement("tr");
+
+                var todo_val = document.createElement("input");             //todo value
+                todo_val.value=val;
+            
+                var edit_btn = document.createElement("button");            //Edit button
+                edit_btn.addEventListener('click', edit_todo);
+                var newText2 = document.createTextNode("Edit");
+                edit_btn.appendChild(newText2);
+
+                var delete_todo_btn = document.createElement("button");     //delete button
+                delete_todo_btn.addEventListener('click', delete_todo);
+                var newText3 = document.createTextNode("Delete");
+                delete_todo_btn.appendChild(newText3);
+
+                todo_table_tr.appendChild(todo_val);                        //add todo
+                todo_table_tr.appendChild(edit_btn);                        //add edit button
+                todo_table_tr.appendChild(delete_todo_btn);                 //add delete button
+                todo_table.appendChild(todo_table_tr);
+
+            newElement1.appendChild(newElement2);
+            newElement1.appendChild(todo_table);
+
+            var target = document.getElementById("container");
+            target.appendChild(newElement1);
+            i++;
+        }
+
+        
+        var element;
+        var add_todo_btn = document.getElementById("addtodo-btn");
+        var edit_todo_btn = document.getElementById("edittodo-btn");
+        var select_box = document.getElementById("select");
+
+        /**
+         * @description Edit todo value
+        */
+        function edit_todo(e)
+        {
+            var input=document.getElementById('to-do-input');
+            input.value = e.currentTarget.parentNode.firstChild.value;            //assign value of todo to input type
+
+            add_todo_btn.style.display = "none";
+            select_box.style.display = "none";
+            edit_todo_btn.style.display = "block";
+
+            element = e.currentTarget.parentNode.firstChild;
+        }
+
+        /**
+         * @description Save new todo value
+        */
+        function savechanges(){
+            var input=document.getElementById('to-do-input');
+            element.value = input.value;
+
+            add_todo_btn.style.display = "block";
+            select_box.style.display = "block";
+            edit_todo_btn.style.display = "none";
+        }
+
+        /**
+         * @description Delete todo from any group
+        */
+        function delete_todo(e)
+        {
+            e.currentTarget.parentNode.parentNode.removeChild(e.currentTarget.parentNode);
+        }
+
+        /**
+         * @description Delete whole group
+        */
+        function delete_Grp(d){
+            d.currentTarget.parentNode.parentNode.parentNode.removeChild(d.currentTarget.parentNode.parentNode);
+        }
+    </script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</body>
+</html>
+

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS-Assignment-4</title>
+</head>
+<body>
+    <script>
+        var num=parseInt(prompt("Please enter any number"));
+
+        var result=cal_sum(num);  //calling function cal_sum with value of num
+
+        document.write("<h2>The sum of "+num+" natural numbers is: "+result+"</h2>");
+        
+        /**
+        @description Sum of n natural numbers
+        @param {integer} Any natural number 
+        @return {integer} Sum of numbers till given natural number
+        */
+        function cal_sum(n)
+        {
+            if(n==1)
+                return 1;
+            else
+                return n+cal_sum(n-1);  //call function recursively untill (n) becomes 1
+        }
+    </script>
+</body>
+</html>
